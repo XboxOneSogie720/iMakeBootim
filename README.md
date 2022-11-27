@@ -23,7 +23,7 @@ Python program to create correctly scaled iBoot images from a picture
 
 ## Example 1: 
 - `python3 iMakeBootim.py -p picture.png -id iPhone8,4`
-- Result: This gives us a .im4p file that was created from the resized picture that fits perfectly on the screen width wize
+- Result: This gives us a .im4p file that was created from the resized picture that fits perfectly on the screen width wise
 
 ## Example 2: 
 - `python3 iMakeBootim.py -p picture.png -id iPhone1,1`
