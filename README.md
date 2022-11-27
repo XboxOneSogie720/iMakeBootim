@@ -20,6 +20,7 @@ Python program to create correctly scaled iBoot images from a picture
 |   -p or --picture  |                Input picture                     |
 | -id or --identifier|          Identifier of your device               |
 |   -t or --blob     | Your blob if you want to sign your outputted file|
+|    --padding       |    Specify padding in pixels for the width.      |
 
 ## Example 1: 
 - `python3 iMakeBootim.py -p picture.png -id iPhone8,4`
@@ -32,3 +33,7 @@ Python program to create correctly scaled iBoot images from a picture
 ## Example 3: 
 - `python3 iMakeBootim.py -p picture.jpg -id iPhone8,4 -t blob.shsh2`
 - Result: This gives us a signed .img4 file that can be uploaded straigt to the iPhone and is able to appear on screen like this: ```irecovery -c "setpicture 0x1"``` (Command through shell is just ```setpicture 0x1```)
+
+## Example 4:
+- 'python3 iMakeBootim.py -p picture.png -id iPhone8,4 -t blob.shsh2 --padding 150'
+- Result: This gives us a signed and correctly scaled img4 file that puts 150 pixels of space between each side of the device's screen and your picture
