@@ -3,7 +3,7 @@ import argparse
 import os
 from colorama import Fore
 
-def main(picture, identifier, blob):
+def main(picture, identifier, blob, padding):
 
     #This dictionary holds all 
     #of the widths for all 64 bit checkm8 
@@ -80,6 +80,11 @@ def main(picture, identifier, blob):
 
     #Define the target width & height and resize
     target_width = Resolutions[identifier.lower()]
+    if padding != None:
+        print(Fore.YELLOW)
+        print("{} Applying specified padding of {}".format("{!}", padding))
+        print(Fore.RESET)
+        target_width -= padding
     wpercent = (target_width / float(origional_width))
     hsize = int((float(origional_height) * float(wpercent)))
     resized_img = img.resize((target_width, hsize))
@@ -125,6 +130,7 @@ if __name__ == "__main__":
     parser.add_argument("-p", "--picture", type=str, help="input picture", required=True)
     parser.add_argument("-id", "--identifier", type=str, help="Identifier of your iDevice", required=True)
     parser.add_argument("-t", "--blob", help="Blob if you want to sign and convert your image to an img4", required=False)
+    parser.add_argument("--padding", type=int,help="Specify a padding horizontally for your image (default padding is 100 pixels)", required=False)
     args = parser.parse_args()
 
     print(args)
@@ -133,4 +139,4 @@ if __name__ == "__main__":
     print("iMakeBootim by XboxOneSogie720\n")
     print(Fore.MAGENTA + "For the best outcome, make the background of your picture black.\n" + Fore.MAGENTA + "\nIf your image doesn't work but this program didn't output any errors, your picture was too tall!")
     input(Fore.BLUE + "Press ENTER/RETURN to continue! Otherwise, press CTRL + C: " + Fore.RESET)
-    main(args.picture, args.identifier, args.blob)
+    main(args.picture, args.identifier, args.blob, args.padding)
