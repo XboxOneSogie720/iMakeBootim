@@ -4,7 +4,8 @@ Python program to create correctly scaled iBoot images from a picture
 # Installing Dependencies
 - You will need the latest version of python3
 - You will need pip/pip3
-- You will need an Intel Mac (M1 running terminal through Rosetta 2 should work fine), and only macs work as of right now. Linux support is a WIP!
+- You will need an Intel Mac (M1 running terminal through Rosetta 2 should work fine), and ONLY A MAC!
+- macOS 10.15 Catalina or higher is recommended
 
 - After you have installed python3 and pip/pip3, open a terminal window and cd into the downloaded directory. Then run: `pip3 install -r requirements.txt`.
 - If your command is pip instead of pip3: `pip install -r requirements.txt`
