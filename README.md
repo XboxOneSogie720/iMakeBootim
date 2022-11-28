@@ -40,7 +40,7 @@ Python program to create correctly scaled iBoot images from a picture
 - Result: This gives us a signed and correctly scaled img4 file that puts 150 pixels of space between each side of the device's screen and your picture
 
 # Issues
-## iBootim or img4tool cannot be opened
+**iBootim or img4tool cannot be opened**
 
 ![Issue iBootim](https://github.com/XboxOneSogie720/iMakeBootim/blob/main/Other/Error_ibootim.png)
 ![Issue img4tool](https://github.com/XboxOneSogie720/iMakeBootim/blob/main/Other/Error_img4tool.png)
