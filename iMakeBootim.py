@@ -2,6 +2,40 @@ from PIL import Image
 import argparse
 import os
 from colorama import Fore
+import zipfile
+
+def satisfy_dependencies():
+    if not os.path.exists("/usr/local/Cellar") or not os.path.exists("/usr/local/bin/brew"):
+        input(Fore.RED + "{!} Homebrew was not found on your system! Press ENTER/RETURN to install it or CTRL + C to quit:" + Fore.RESET)
+        os.system('/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"')
+        print(Fore.YELLOW + "{!} Installing the latest version of python3" + Fore.RESET)
+        os.system("brew install python3")
+        print(Fore.YELLOW + "{!} Reinstalling python dependencies" + Fore.RESET)
+        os.system("pip3 install -r ./requirements.txt")
+    if not os.path.exists("./Resources/Darwin/ibootim") or not os.path.exists("./Resources/Darwin/img4tool"):
+        print(Fore.YELLOW + "{!} Reinstalling ibootim and img4tool" + Fore.RESET)
+        if not os.path.exists("./work"):
+            os.system("mkdir ./work && mkdir ./work/ibootim && mkdir ./work/img4tool")
+        os.system("git clone https://github.com/realnp/ibootim ./work/ibootim")
+        print(Fore.YELLOW + "{!} Checking for libpng" + Fore.RESET)
+        if not os.path.exists("/usr/local/Cellar/libpng"):
+            print(Fore.YELLOW + "{!} Installing libpng via Homebrew")
+            os.system("brew install libpng")
+        print(Fore.YELLOW + "{!} Building ibootim" + Fore.RESET)
+        os.system("gcc ./work/ibootim/ibootim.c ./work/ibootim/lzss.c ./work/ibootim/main.c -lpng -o ./Resources/Darwin/ibootim")
+        print(Fore.YELLOW + "Downloading img4tool" + Fore.RESET)
+        os.system("python3 -m wget 'https://github.com/tihmstar/img4tool/releases/download/197/buildroot_macos-latest.zip' -o ./work/img4tool")
+        with zipfile.ZipFile("./work/img4tool/buildroot_macos-latest.zip", "r") as unzipper:
+            unzipper.extractall("./work/img4tool")
+        print(Fore.YELLOW + "{!} Installing img4tool" + Fore.RESET)
+        os.system("mv ./work/img4tool/buildroot_macos-latest/usr/local/bin/img4tool ./Resources/Darwin && mv ./work/img4tool/buildroot_macos-latest/usr/local/include/img4tool /usr/local/include && mv ./work/img4tool/buildroot_macos-latest/usr/local/lib/libimg4tool.a /usr/local/lib && mv ./work/img4tool/buildroot_macos-latest/usr/local/lib/libimg4tool.la /usr/local/lib && mv ./work/img4tool/buildroot_macos-latest/usr/local/lib/pkgconfig /usr/local/lib")
+        print(Fore.YELLOW + "{!} Running chmod on binaries" + Fore.RESET)
+        os.system("chmod +x ./Resources/Darwin/ibootim && chmod +x ./Resources/Darwin/img4tool")
+        print(Fore.GREEN + "{!} Binaries done installing!" + Fore.RESET)
+        print(Fore.YELLOW + "{!} Cleaning" + Fore.RESET)
+        os.system("rm -rf ./work")
+
+
 
 def main(picture, identifier, blob, padding):
 
@@ -133,8 +167,11 @@ if __name__ == "__main__":
     parser.add_argument("--padding", type=int,help="Specify a padding horizontally for your image (default padding is 100 pixels)", required=False)
     args = parser.parse_args()
 
-    print(args)
-
+    if os.path.exists("./Resources/Darwin/ibootim") and os.path.exists("./Resources/Darwin/img4tool"):
+        print(Fore.GREEN + "{!} All dependencies found!" + Fore.RESET)
+    else:
+        os.system("mkdir ./Resources && mkdir ./Resources/Darwin")
+        satisfy_dependencies()
 
     print("iMakeBootim by XboxOneSogie720\n")
     print(Fore.MAGENTA + "For the best outcome, make the background of your picture black.\n" + Fore.MAGENTA + "\nIf your image doesn't work but this program didn't output any errors, your picture was too tall!")
